@@ -1,0 +1,22 @@
+@import url("https://fonts.googleapis.com/css2?family=Rubik+Puddles&display=swap");
+
+.const {
+  background-color: #224d4f;
+}
+
+body {
+  background-color: #071616;
+}
+
+.cf2 {
+  font-family: Georgia, serif;
+  font-size: 1.2em;
+}
+
+.cf {
+  font-family: "Rubik Puddles", cursive;
+}
+
+.n:hover {
+  color: goldenrod;
+}
