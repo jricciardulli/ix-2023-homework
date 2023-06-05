@@ -1,7 +1,7 @@
-export class ingredient {
-  constructor(name, amount, unit) {
+export class Ingredient {
+  constructor(name, amount, units) {
     this.name = name;
     this.amount = amount;
-    this.unit = unit;
+    this.units = units;
   }
 }
