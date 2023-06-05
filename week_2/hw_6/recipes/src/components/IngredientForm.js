@@ -1,18 +1,28 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import { Ingredient } from "../models/ingredient";
 
 export default function IngredientForm(props) {
   const [name, setName] = useState("");
   const [amount, setAmount] = useState("");
   const [units, setUnits] = useState("");
+  const [count, setCount] = useState(0);
+
+  useEffect(() => {
+    if (props.ingredientToEdit) {
+      setName(props.ingredientToEdit.name);
+      setAmount(props.ingredientToEdit.amount);
+      setUnits(props.ingredientToEdit.units);
+    }
+  }, [props.ingredientToEdit]);
 
   function onAddIngredient() {
     if (!isValid()) {
       return;
     }
 
-    let ingredient = new Ingredient(name, amount, units);
+    let ingredient = new Ingredient(name, amount, units, count);
     props.onIngredientCreated(ingredient);
+    setCount(count + 1);
     clearInput();
   }
 
@@ -62,7 +72,7 @@ export default function IngredientForm(props) {
         <button
           className="btn btn-outline-primary"
           type="button"
-          onClick={onAddIngredient}
+          onClick={() => onAddIngredient()}
         >
           Add Ingredient
         </button>

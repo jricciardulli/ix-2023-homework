@@ -3,12 +3,14 @@
 import React, { useState } from "react";
 import { Recipe } from "../models/recipe";
 import IngredientForm from "./IngredientForm";
+import IngredientTable from "./IngredientTable";
 
 export default function RecipeForm(props) {
   const [name, setName] = useState("");
   const [time, setTime] = useState("");
   const [ingredients, setIngredients] = useState([]);
   const [instructions, setInstructions] = useState("");
+  const [ingredientToEdit, setIngredientToEdit] = useState(null);
 
   function onRecipeFormSubmit(e) {
     e.preventDefault();
@@ -23,6 +25,16 @@ export default function RecipeForm(props) {
 
   function onIngredientCreated(ingredient) {
     setIngredients([...ingredients, ingredient]);
+    setIngredientToEdit(null);
+  }
+
+  function onIngredientDelete(ingredient) {
+    setIngredients(ingredients.filter((x) => x.num !== ingredient.num));
+  }
+
+  function onIngredientEdit(ingredient) {
+    setIngredientToEdit(ingredient);
+    setIngredients(ingredients.filter((x) => x.num !== ingredient.num));
   }
 
   function isValid() {
@@ -76,8 +88,16 @@ export default function RecipeForm(props) {
 
         <IngredientForm
           onIngredientCreated={onIngredientCreated}
+          ingredientToEdit={ingredientToEdit}
         ></IngredientForm>
-        <div>Ingredients: </div>
+
+        <h5 className="mt-2">Ingredients</h5>
+
+        <IngredientTable
+          ingredients={ingredients}
+          onIngredientDelete={onIngredientDelete}
+          onIngredientEdit={onIngredientEdit}
+        ></IngredientTable>
 
         <div className="d-grid mt-4">
           <button className="btn btn-outline-primary" type="submit">
