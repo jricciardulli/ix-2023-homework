@@ -2,6 +2,7 @@ import "./App.css";
 import "bootstrap/dist/css/bootstrap.min.css";
 import RecipeForm from "./components/RecipeForm";
 import { useState } from "react";
+import RecipeAccordian from "./components/RecipeAccordian";
 
 function App() {
   const [recipes, setRecipes] = useState([]);
@@ -16,6 +17,7 @@ function App() {
       <div className="card p-4">
         <h1>My Recipes</h1>
         <RecipeForm onRecipeCreated={onRecipeCreated}></RecipeForm>
+        <RecipeAccordian recipes={recipes}></RecipeAccordian>
         <h2 className="my-3">Recipe List</h2>
       </div>
     </div>

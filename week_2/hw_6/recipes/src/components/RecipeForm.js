@@ -20,6 +20,7 @@ export default function RecipeForm(props) {
 
     let recipe = new Recipe(name, time, ingredients, instructions);
     props.onRecipeCreated(recipe);
+    setIngredients([]);
     clearInput();
   }
 
