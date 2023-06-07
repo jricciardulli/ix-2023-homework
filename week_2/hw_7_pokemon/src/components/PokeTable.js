@@ -1,15 +1,13 @@
 import React from "react";
 
 export default function PokeTable(props) {
+  async function onClick(pokemon) {
+    await props.onInspect(pokemon);
+  }
+
   return (
     <div>
-      <table className="table mt-5">
-        <thead>
-          <tr>
-            <th>Name</th>
-            <th>Actions</th>
-          </tr>
-        </thead>
+      <table className="table">
         <tbody id="table-body">
           {props.pokeList.map((pokemon) => {
             return (
@@ -18,7 +16,7 @@ export default function PokeTable(props) {
                 <td>
                   <button
                     className="btn btn-primary"
-                    onClick={() => props.onInspect(pokemon)}
+                    onClick={() => onClick(pokemon)}
                   >
                     Inspect
                   </button>
