@@ -65,6 +65,7 @@ export default function BookPage(props) {
           books={books}
           onBookDelete={onBookDelete}
           onBookEdit={onBookEdit}
+          loading={loading}
         ></BookTable>
       </div>
     </div>

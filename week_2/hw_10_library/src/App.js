@@ -11,6 +11,7 @@ import { useEffect, useState } from "react";
 import { auth } from "./firebase/firebase";
 import { onAuthStateChanged } from "firebase/auth";
 import RequireAuth from "./components/common/RequireAuth";
+import Spinner from "./components/common/Spinner";
 
 function App() {
   const [user, setUser] = useState(null);
@@ -40,7 +41,9 @@ function App() {
           <Route path="/register" element={<RegisterPage />}></Route>
         </Routes>
       ) : (
-        <div className="mt-5 text-center"></div>
+        <div className="mt-5 text-center">
+          <Spinner></Spinner>
+        </div>
       )}
     </BrowserRouter>
   );
