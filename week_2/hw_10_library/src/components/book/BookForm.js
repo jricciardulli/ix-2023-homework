@@ -1,10 +1,12 @@
 import React, { useState, useEffect } from "react";
 import { Book } from "../../models/book";
+import Button from "../common/Button";
 
 export default function BookForm(props) {
   const [title, setTitle] = useState("");
   const [author, setAuthor] = useState("");
   const [isbn, setISBN] = useState("");
+  const [loading, setLoading] = useState(false);
 
   //UseEffect runs function anytime our bookToEdit changes
   useEffect(() => {
@@ -21,20 +23,29 @@ export default function BookForm(props) {
       return;
     }
 
-    let book = new Book(title, author, isbn, props.bookToEdit.id, props.user.uid);
+    let book = new Book(
+      title,
+      author,
+      isbn,
+      props.bookToEdit.id,
+      props.user.uid
+    );
     props.onBookUpdate(book);
     clearInput();
   }
 
-  function onBookFormSubmit(e) {
+  async function onBookFormSubmit(e) {
     e.preventDefault();
+
+    setLoading(true);
     if (!isValid()) {
       return;
     }
 
     let book = new Book(title, author, isbn, null, props.user.uid);
-    props.onBookCreated(book);
+    await props.onBookCreated(book);
     clearInput();
+    setLoading(false);
   }
 
   function isValid() {
@@ -51,7 +62,10 @@ export default function BookForm(props) {
     <div>
       <h1>Library</h1>
 
-      <form id="form" onSubmit={props.bookToEdit ? onUpdateBook : onBookFormSubmit}>
+      <form
+        id="form"
+        onSubmit={props.bookToEdit ? onUpdateBook : onBookFormSubmit}
+      >
         <div className="mb-3">
           <label className="form-label"> Title </label>
           <input
@@ -86,9 +100,12 @@ export default function BookForm(props) {
         </div>
 
         <div className="d-grid mt-4">
-          <button className="btn btn-outline-primary" type="submit">
+          <Button variant="outline-primary" type="submit" loading={loading}>
             {props.bookToEdit ? "Update Book" : "Add Book"}
-          </button>
+          </Button>
+          {/* <button className="btn btn-outline-primary" type="submit">
+            {props.bookToEdit ? "Update Book" : "Add Book"}
+          </button> */}
         </div>
       </form>
     </div>

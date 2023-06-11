@@ -4,15 +4,18 @@ import { signInWithEmailAndPassword } from "firebase/auth";
 
 import { auth } from "../../firebase/firebase";
 import { useNavigate } from "react-router-dom";
+import Button from "../common/Button";
 
 export default function LoginPage() {
   const navigate = useNavigate();
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
+  const [loading, setLoading] = useState(false);
 
   async function onFormSubmit(e) {
     e.preventDefault();
 
+    setLoading(true);
     try {
       const userCred = await signInWithEmailAndPassword(auth, email, password);
       console.log(userCred);
@@ -20,6 +23,7 @@ export default function LoginPage() {
     } catch (err) {
       alert(err.message);
     }
+    setLoading(false);
   }
 
   return (
@@ -52,9 +56,12 @@ export default function LoginPage() {
           </div>
 
           <div className="d-flex justify-content-end mt-4">
-            <button type="submit" className="btn btn-primary">
+            <Button type="submit" className="px-5" loading={loading}>
               Login
-            </button>
+            </Button>
+            {/* <button type="submit" className="btn btn-primary">
+              Login
+            </button> */}
           </div>
         </form>
       </div>

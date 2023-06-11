@@ -4,15 +4,18 @@ import { createUserWithEmailAndPassword } from "firebase/auth";
 
 import { auth } from "../../firebase/firebase";
 import { useNavigate } from "react-router-dom";
+import Button from "../common/Button";
 
 export default function RegisterPage() {
   const navigate = useNavigate();
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
+  const [loading, setLoading] = useState(false);
 
   async function onFormSubmit(e) {
     e.preventDefault();
 
+    setLoading(true);
     try {
       const userCred = await createUserWithEmailAndPassword(
         auth,
@@ -24,6 +27,7 @@ export default function RegisterPage() {
     } catch (err) {
       alert(err.message);
     }
+    setLoading(false);
   }
 
   return (
@@ -56,9 +60,12 @@ export default function RegisterPage() {
           </div>
 
           <div className="d-flex justify-content-end mt-4">
-            <button type="submit" className="btn btn-primary">
+            <Button type="submit" className="px-5" loading={loading}>
+              Login
+            </Button>
+            {/* <button type="submit" className="btn btn-primary">
               Register
-            </button>
+            </button> */}
           </div>
         </form>
       </div>
